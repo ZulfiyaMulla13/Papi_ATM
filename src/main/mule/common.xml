@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="createAccandcheckBal" doc:id="35c319d3-c90d-430a-bc54-04fda5e2b8a9" >
+	 <flow-ref doc:name='"getting Original payload"' doc:id="5c334e85-e0c7-4937-b689-677eef9a87aa" name="Original"/>
+		<flow-ref doc:name="QueryParams" doc:id="9e580eac-0252-4fd1-963e-cc92efac7f1f" name="QueryParams"/>
+		<db:select doc:name="Select" doc:id="9edadee1-6ca3-4b41-bb8a-e5fa03f88dc5" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from Bank_Transactions where custAccNum=:custAccNum and bankName=:bank;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	"bank": vars.QParams.bank,
+	"custAccNum": vars.Original.accountNum
+	
+}]]]></db:input-parameters>
+		</db:select>
+   </sub-flow>
+	  
+</mule>

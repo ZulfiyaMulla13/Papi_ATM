@@ -1,0 +1,112 @@
+#%RAML 1.0
+title: ATM_Transaction
+types:
+  createAccount_post_Request: !include /datatypes/createAccount_Post_Request.raml
+  checkBalance_post_Request: !include /datatypes/checkBalance_Post_Request.raml
+  withDraw_Post_dataType: !include /datatypes/withDraw_Post_dataType.raml
+  unblock_put_request: !include /datatypes/unblock_put_request.raml
+  Response: !include /datatypes/Response_dataType.raml
+/createAccount:
+  post:
+    queryParameters:
+      customerName:
+        required: true
+        minLength: 4
+        maxLength: 45
+      bank:
+        required: true
+        enum:
+          - ICICI
+          - AXIS
+          - HDFC
+      type:
+        required: true
+        enum:
+          - saving
+          - current
+    body:
+      application/json:
+        type: createAccount_post_Request
+        example: !include /Examples/createAccount_Post_example.raml
+    responses:
+      201:
+        body:
+          application/json:
+            type: Response
+            example: !include /Examples/createAccount_Response_example.raml
+/checkBalance:
+  post:
+    queryParameters:
+      bank:
+        required: true
+        enum:
+          - ICICI
+          - AXIS
+          - HDFC
+      type:
+        enum:
+          - saving
+          - current
+    body:
+      application/json:
+        type: checkBalance_post_Request
+        example: !include /Examples/checkBalance_Post_Request_example.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include /datatypes/Response_dataType.raml
+            example: !include /Examples/checkBalance_Post_Response_example.raml
+/withDraw:
+  post:
+    queryParameters:
+      bank:
+        required: true
+        enum:
+          - ICICI
+          - AXIS
+          - HDFC
+      type:
+        required: true
+        enum:
+          - savings
+          - current
+    body:
+      application/json:
+        type: withDraw_Post_dataType
+        example: !include /Examples/withDraw_Post_Request_example.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: Response
+            example: !include /Examples/withDraw_Post_Response_example.raml
+/unblock:
+  put:
+    body:
+      application/json:
+       type: unblock_put_request
+       example: !include /Examples/unblock_put_Request_example.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: Response
+            example: !include /Examples/unblock_put_Response_example.raml
+              
+
+        
+            
+
+
+  
+              
+            
+
+
+
+
+        
+
+          
+
